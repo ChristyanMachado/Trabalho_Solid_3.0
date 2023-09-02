@@ -54,22 +54,6 @@ public class Main extends Menu {
             }
         }
     }
-    private static void cadastrarConta(Map<String, ClientePessoaFisica> clientes, Map<String, Conta> contas, Class<? extends Conta> tipoConta, Scanner scanner) {
-        System.out.println("Digite o CPF do cliente:");
-        String cpf = scanner.nextLine();
-        ClientePessoaFisica cliente = clientes.get(cpf);
 
-        if (cliente != null) {
-            try {
-                Conta conta = tipoConta.getDeclaredConstructor(String.class, ClientePessoaFisica.class).newInstance("123", cliente);
-                contas.put(conta.getNumeroConta(), conta);
-                System.out.println("Conta cadastrada com sucesso.");
-            } catch (Exception e) {
-                System.out.println("Erro ao cadastrar a conta.");
-            }
-        } else {
-            System.out.println("Cliente não encontrado. Cadastre o cliente primeiro.");
-        }
-    }
 
 }

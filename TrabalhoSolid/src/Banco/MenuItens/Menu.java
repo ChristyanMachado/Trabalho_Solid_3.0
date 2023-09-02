@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 public class Menu {
     public static void exibirMenu() {
-        Map<String, ClientePessoaFisica> clientes = new HashMap<>();
-        Map<String, AbstractConta> contas = new HashMap<>();
         boolean loop = true;
         Scanner scanner = new Scanner(System.in);
 

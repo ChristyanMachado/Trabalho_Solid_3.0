@@ -1,10 +1,16 @@
 package Banco.Contas;
 
 import Banco.Cliente.AbstractCliente;
+import Banco.Cliente.ClientePessoaFisica;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
+
 
 public abstract class AbstractConta {
+    Map<String, AbstractConta> contas = new HashMap<>();
     private String agencia;
     private String numeroConta;
     private String senha;
@@ -76,5 +82,22 @@ public abstract class AbstractConta {
         return String.format("%04d", random.nextInt(10000));
     }
 
+    private static void cadastrarConta(Map<String, ClientePessoaFisica> clientes, Map<String, Conta> contas, Class<? extends Conta> tipoConta, Scanner scanner) {
+        System.out.println("Digite o CPF do cliente:");
+        String cpf = scanner.nextLine();
+        ClientePessoaFisica cliente = clientes.get(cpf);
+
+        if (cliente != null) {
+            try {
+                Conta conta = tipoConta.getDeclaredConstructor(String.class, ClientePessoaFisica.class).newInstance("123", cliente);
+                contas.put(conta.getNumeroConta(), conta);
+                System.out.println("Conta cadastrada com sucesso.");
+            } catch (Exception e) {
+                System.out.println("Erro ao cadastrar a conta.");
+            }
+        } else {
+            System.out.println("Cliente não encontrado. Cadastre o cliente primeiro.");
+        }
+    }
 
 }
