@@ -11,6 +11,19 @@ public abstract class AbstractConta {
     private AbstractCliente cliente;
     private double saldo;
 
+    public String getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(String agencia) {
+        this.agencia = agencia;
+    }
+
+    public String getNumeroConta() {
+        return numeroConta;
+    }
+
+
     public AbstractConta(String agencia, AbstractCliente cliente) {
         this.agencia = agencia;
         this.numeroConta = gerarNumeroAleatorio();
@@ -56,6 +69,7 @@ public abstract class AbstractConta {
         System.out.println("Transferência realizada com sucesso.");
     }
 
+    public abstract Contas getTipoConta();
 
     private String gerarNumeroAleatorio() {
         Random random = new Random();
