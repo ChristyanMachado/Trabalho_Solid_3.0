@@ -120,6 +120,7 @@ public class Menu {
 
         System.out.println("Digite o código da agência:");
         String agencia = scanner.nextLine();
+        scanner.nextLine();
 
         System.out.println("Digite a senha da conta:");
         String senha = scanner.nextLine();
@@ -159,9 +160,10 @@ public class Menu {
 
             System.out.println("Digite o valor do depósito:");
             double valor = scanner.nextDouble();
-            scanner.nextLine();
 
             contaOrigem.depositar(valor);
+            System.out.println("Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia());
+            System.out.printf("\nSaldo: R$%.2f" + contaOrigem.getSaldo());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -172,7 +174,7 @@ public class Menu {
                 "1- Conta Corrente | 2 - Conta Poupança\n" +
                 "Conta:");
         int tipoConta = scanner.nextInt();
-        scanner.nextLine();
+            scanner.nextLine();
 
         Map<String, ? extends AbstractConta> contas;
         if (tipoConta == 1) {
@@ -190,9 +192,12 @@ public class Menu {
 
             System.out.println("Digite o valor do saque:");
             double valor = scanner.nextDouble();
-            scanner.nextLine();
 
             contaOrigem.sacar(valor);
+
+            System.out.println("    Status\n" +
+                    "Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia());
+                    System.out.printf("\nSaldo: R$%.2f", contaOrigem.getSaldo());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -260,8 +265,16 @@ public class Menu {
                 System.out.println("Saldo insuficiente na conta de origem.");
                 return;
             }
-
             contaOrigem.transferir(valor, contaDestino);
+
+            System.out.println("Status Conta Origem");
+            System.out.print("Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia());
+            System.out.printf("\nSaldo: %.2fzn", contaOrigem.getSaldo());
+
+            System.out.println("Status Conta Destino");
+            System.out.print("Conta Numero: "+ contaDestino.getNumeroConta()+" Agencia: " + contaDestino.getAgencia());
+            System.out.printf("\nSaldo: %.2f\n", contaDestino.getSaldo());
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

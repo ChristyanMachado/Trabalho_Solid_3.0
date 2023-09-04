@@ -15,8 +15,4 @@ private String nome;
     public String getNome() {
         return nome;
     }
-
-    public String getCpf() {
-        return cpf;
-    }
 }

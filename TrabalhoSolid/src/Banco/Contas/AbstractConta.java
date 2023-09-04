@@ -39,19 +39,6 @@ public abstract class AbstractConta {
         return numeroConta;
     }
 
-    public void setSenha(String senha) {
-        try {
-            AbstractConta.validarSenhaCriacao(senha);
-            this.senha = senha;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public AbstractCliente getCliente() {
-        return cliente;
-    }
-
     public abstract TipoConta getTipoConta();
 
     private String gerarNumeroAleatorio() {
@@ -72,41 +59,40 @@ public abstract class AbstractConta {
 
     public void depositar(double valor) throws Exception {
         if (valor <= 0)
-            throw new Exception("Valor de depósito inválido");
+            throw new Exception("\nValor de depósito inválido");
 
         saldo += valor;
-        System.out.println("Depósito realizado com sucesso.");
+        System.out.println("\nDepósito realizado com sucesso.");
     }
 
     public void sacar(double valor) throws Exception {
         if (valor <= 0)
-            throw new Exception("Valor de saque inválido");
+            throw new Exception("\nValor de saque inválido");
 
         if (saldo < valor)
-            throw new Exception("Saldo insuficiente");
+            throw new Exception("\nSaldo insuficiente");
 
         saldo -= valor;
-        System.out.println("Saque realizado com sucesso.");
+        System.out.println("\nSaque realizado com sucesso.");
     }
 
     public void transferir(double valor, AbstractConta destino) throws Exception {
         if (valor <= 0)
-            throw new Exception("Valor de transferência inválido");
+            throw new Exception("\nValor de transferência inválido");
 
         if (saldo < valor)
-            throw new Exception("Saldo insuficiente");
+            throw new Exception("\nSaldo insuficiente");
 
         saldo -= valor;
         destino.depositar(valor);
-        System.out.println("Transferência realizada com sucesso.");
+        System.out.println("\nTransferência realizada com sucesso.");
     }
 
     public static void validarSenha(Scanner scanner, AbstractConta conta) throws Exception {
         System.out.println("Digite a senha da conta:");
         String senha = scanner.nextLine();
-        scanner.nextLine();
 
-        if (conta.getSenha().equals(senha))
+        if (!conta.getSenha().equals(senha))
             throw new Exception("Senha incorreta");
     }
 
@@ -114,18 +100,6 @@ public abstract class AbstractConta {
         System.out.println("Digite o código da agência:");
         String agencia = scanner.nextLine();
 
-        System.out.println("Digite o número da conta:");
-        String numeroConta = scanner.nextLine();
-
-        AbstractConta conta = contas.get(agencia + numeroConta);
-        if (conta == null)
-            throw new Exception("Conta não encontrada");
-
-        return conta;
-    }
-    public static AbstractConta buscarConta(Scanner scanner) throws Exception {
-        System.out.println("Digite o código da agência:");
-        String agencia = scanner.nextLine();
 
         System.out.println("Digite o número da conta:");
         String numeroConta = scanner.nextLine();
