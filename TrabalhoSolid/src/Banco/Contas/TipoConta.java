@@ -1,6 +1,6 @@
 package Banco.Contas;
 
-public enum Contas {
+public enum TipoConta {
      Corrente,
      Poupanca;
 }

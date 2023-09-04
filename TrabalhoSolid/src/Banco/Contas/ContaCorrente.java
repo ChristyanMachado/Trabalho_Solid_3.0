@@ -3,12 +3,13 @@ package Banco.Contas;
 import Banco.Cliente.AbstractCliente;
 
 public class ContaCorrente extends AbstractConta{
-    public ContaCorrente(String agencia, AbstractCliente cliente) {
-        super(agencia, cliente);
+
+    public ContaCorrente(String agencia, AbstractCliente cliente, String senha) {
+        super(agencia, cliente, senha);
     }
 
     @Override
-    public Contas getTipoConta() {
-        return Contas.Corrente;
+    public TipoConta getTipoConta() {
+        return TipoConta.Corrente;
     }
 }

@@ -1,7 +1,6 @@
 package Banco.Contas;
 
 import Banco.Cliente.AbstractCliente;
-import Banco.Cliente.ClientePessoaFisica;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,32 +9,65 @@ import java.util.Scanner;
 
 
 public abstract class AbstractConta {
-    Map<String, AbstractConta> contas = new HashMap<>();
+    private static Map<String, AbstractConta> contas = new HashMap<>();
     private String agencia;
     private String numeroConta;
     private String senha;
     private AbstractCliente cliente;
     private double saldo;
 
+    protected AbstractConta(String agencia, AbstractCliente cliente, String senha) {
+        this.agencia = agencia;
+        this.numeroConta = gerarNumeroAleatorio();
+        this.senha = senha;
+        this.cliente = cliente;
+        this.saldo = 0.0;
+    }
+
     public String getAgencia() {
         return agencia;
     }
+    public String getSenha() {
+        return senha;
+    }
 
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
+    public double getSaldo() {
+        return saldo;
     }
 
     public String getNumeroConta() {
         return numeroConta;
     }
 
+    public void setSenha(String senha) {
+        try {
+            AbstractConta.validarSenhaCriacao(senha);
+            this.senha = senha;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-    public AbstractConta(String agencia, AbstractCliente cliente) {
-        this.agencia = agencia;
-        this.numeroConta = gerarNumeroAleatorio();
-        this.senha = gerarNumeroAleatorio();
-        this.cliente = cliente;
-        this.saldo = 0.0;
+    public AbstractCliente getCliente() {
+        return cliente;
+    }
+
+    public abstract TipoConta getTipoConta();
+
+    private String gerarNumeroAleatorio() {
+        Random random = new Random();
+        return String.format("%04d", random.nextInt(10000));
+    }
+
+    public static void validarSenhaCriacao(String senha) throws Exception {
+        if (senha.length() != 4)
+            throw new Exception("A senha deve ter exatamente 4 dígitos");
+
+        try {
+            Integer.parseInt(senha);
+        } catch (NumberFormatException e) {
+            throw new Exception("A senha deve conter apenas dígitos numéricos");
+        }
     }
 
     public void depositar(double valor) throws Exception {
@@ -46,12 +78,9 @@ public abstract class AbstractConta {
         System.out.println("Depósito realizado com sucesso.");
     }
 
-    public void sacar(double valor, String senha) throws Exception {
+    public void sacar(double valor) throws Exception {
         if (valor <= 0)
             throw new Exception("Valor de saque inválido");
-
-        if (!this.senha.equals(senha))
-            throw new Exception("Senha incorreta");
 
         if (saldo < valor)
             throw new Exception("Saldo insuficiente");
@@ -60,12 +89,9 @@ public abstract class AbstractConta {
         System.out.println("Saque realizado com sucesso.");
     }
 
-    public void transferir(double valor, AbstractConta destino, String senha) throws Exception {
+    public void transferir(double valor, AbstractConta destino) throws Exception {
         if (valor <= 0)
             throw new Exception("Valor de transferência inválido");
-
-        if (!this.senha.equals(senha))
-            throw new Exception("Senha incorreta");
 
         if (saldo < valor)
             throw new Exception("Saldo insuficiente");
@@ -75,29 +101,40 @@ public abstract class AbstractConta {
         System.out.println("Transferência realizada com sucesso.");
     }
 
-    public abstract Contas getTipoConta();
+    public static void validarSenha(Scanner scanner, AbstractConta conta) throws Exception {
+        System.out.println("Digite a senha da conta:");
+        String senha = scanner.nextLine();
+        scanner.nextLine();
 
-    private String gerarNumeroAleatorio() {
-        Random random = new Random();
-        return String.format("%04d", random.nextInt(10000));
+        if (conta.getSenha().equals(senha))
+            throw new Exception("Senha incorreta");
     }
 
-    private static void cadastrarConta(Map<String, ClientePessoaFisica> clientes, Map<String, Conta> contas, Class<? extends Conta> tipoConta, Scanner scanner) {
-        System.out.println("Digite o CPF do cliente:");
-        String cpf = scanner.nextLine();
-        ClientePessoaFisica cliente = clientes.get(cpf);
+    public static AbstractConta buscarConta(Scanner scanner, Map<String, ? extends AbstractConta> contas) throws Exception {
+        System.out.println("Digite o código da agência:");
+        String agencia = scanner.nextLine();
 
-        if (cliente != null) {
-            try {
-                Conta conta = tipoConta.getDeclaredConstructor(String.class, ClientePessoaFisica.class).newInstance("123", cliente);
-                contas.put(conta.getNumeroConta(), conta);
-                System.out.println("Conta cadastrada com sucesso.");
-            } catch (Exception e) {
-                System.out.println("Erro ao cadastrar a conta.");
-            }
-        } else {
-            System.out.println("Cliente não encontrado. Cadastre o cliente primeiro.");
-        }
+        System.out.println("Digite o número da conta:");
+        String numeroConta = scanner.nextLine();
+
+        AbstractConta conta = contas.get(agencia + numeroConta);
+        if (conta == null)
+            throw new Exception("Conta não encontrada");
+
+        return conta;
+    }
+    public static AbstractConta buscarConta(Scanner scanner) throws Exception {
+        System.out.println("Digite o código da agência:");
+        String agencia = scanner.nextLine();
+
+        System.out.println("Digite o número da conta:");
+        String numeroConta = scanner.nextLine();
+
+        AbstractConta conta = contas.get(agencia + numeroConta);
+        if (conta == null)
+            throw new Exception("Conta não encontrada");
+
+        return conta;
     }
 
 }
