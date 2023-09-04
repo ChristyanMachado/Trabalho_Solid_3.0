@@ -20,15 +20,17 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
 
         while (loop) {
-            System.out.println("\nEscolha uma opção:");
-            System.out.println("1 - Cadastrar Cliente Pessoa Física");
-            System.out.println("2 - Cadastrar Conta Corrente");
-            System.out.println("3 - Cadastrar Conta Poupança");
-            System.out.println("4 - Efetuar Depósito");
-            System.out.println("5 - Efetuar Saque");
-            System.out.println("6 - Efetuar Transferência");
-            System.out.println("7 - Sair");
-            System.out.print("Opção:");
+            System.out.println("\n=-=-=-=-=-=-=-=-=-MENU-=-=-=-=-=-=-=-=-=-\n" +
+                               "||          Escolha uma opção:         ||");
+            System.out.println("|| 1 - Cadastrar Cliente Pessoa Física ||");
+            System.out.println("|| 2 - Cadastrar Conta Corrente        ||");
+            System.out.println("|| 3 - Cadastrar Conta Poupança        ||");
+            System.out.println("|| 4 - Efetuar Depósito                ||");
+            System.out.println("|| 5 - Efetuar Saque                   ||");
+            System.out.println("|| 6 - Efetuar Transferência           ||");
+            System.out.println("|| 7 -            SAIR                 ||");
+            System.out.println("=-=-=-=-=-=-=-=-=-MENU-=-=-=-=-=-=-=-=-=-\n");
+            System.out.print(" Opção:");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -59,6 +61,9 @@ public class Menu {
                     efetuarTransferencia(scanner);
                     break;
                 case 7:
+                    System.out.println("\nENCERRANDO SISTEMA...\n" +
+                            "\nENCERRANDO SISTEMA...\n" +
+                            "\nENCERRANDO SISTEMA...\n");
                     loop = false;
                     break;
                 default:
@@ -69,10 +74,12 @@ public class Menu {
     }
 
     private static void cadastrarCliente(Scanner scanner) {
-        System.out.println("Digite o CPF do cliente:");
+        System.out.print("Digite o CPF do cliente:" +
+                "\nCPF:");
         String cpf = scanner.nextLine();
 
-        System.out.println("Digite o nome do cliente:");
+        System.out.print("Digite o nome do cliente:" +
+                "\nNome:");
         String nome = scanner.nextLine();
 
         ClientePessoaFisica cliente = new ClientePessoaFisica(cpf, nome);
@@ -82,7 +89,8 @@ public class Menu {
     }
 
     private static void cadastrarContaCorrente(Scanner scanner) {
-        System.out.println("Digite o CPF do cliente:");
+        System.out.print("Digite o CPF do cliente:" +
+                "\nCPF:");
         String cpf = scanner.nextLine();
 
         AbstractCliente cliente = clientes.get(cpf);
@@ -91,10 +99,12 @@ public class Menu {
             return;
         }
 
-        System.out.println("Digite o código da agência:");
+        System.out.print("Digite o código da agência:" +
+                "\nCódigo:");
         String agencia = scanner.nextLine();
 
-        System.out.println("Digite a senha da conta:");
+        System.out.print("Digite a senha da conta:" +
+                "\nSenha:");
         String senha = scanner.nextLine();
 
         try {
@@ -109,7 +119,8 @@ public class Menu {
     }
 
     private static void cadastrarContaPoupanca(Scanner scanner) {
-        System.out.println("Digite o CPF do cliente:");
+        System.out.print("Digite o CPF do cliente:" +
+                "\nCPF:");
         String cpf = scanner.nextLine();
 
         AbstractCliente cliente = clientes.get(cpf);
@@ -118,11 +129,13 @@ public class Menu {
             return;
         }
 
-        System.out.println("Digite o código da agência:");
+        System.out.print("Digite o código da agência:" +
+                "\nCódigo:");
         String agencia = scanner.nextLine();
         scanner.nextLine();
 
-        System.out.println("Digite a senha da conta:");
+        System.out.print("Digite a senha da conta:" +
+                "\nSenha:");
         String senha = scanner.nextLine();
         scanner.nextLine();
 
@@ -162,8 +175,10 @@ public class Menu {
             double valor = scanner.nextDouble();
 
             contaOrigem.depositar(valor);
-            System.out.println("Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia());
-            System.out.printf("\nSaldo: R$%.2f" + contaOrigem.getSaldo());
+            System.out.println("    Status\n" +
+                    "Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia()+
+                    "\nCliente: "+ contaOrigem.getNome());
+            System.out.printf("\nSaldo: R$%.2f", contaOrigem.getSaldo());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -196,8 +211,9 @@ public class Menu {
             contaOrigem.sacar(valor);
 
             System.out.println("    Status\n" +
-                    "Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia());
-                    System.out.printf("\nSaldo: R$%.2f", contaOrigem.getSaldo());
+                    "Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia()+
+            "\nCliente: "+ contaOrigem.getNome());
+            System.out.printf("\nSaldo: R$%.2f", contaOrigem.getSaldo());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -220,7 +236,7 @@ public class Menu {
             return;
         }
 
-        System.out.print("======Selecione o Tipo de Conta do Destino=======\n" +
+        System.out.print("\n======Selecione o Tipo de Conta do Destino=======\n" +
                 "1- Conta Corrente | 2 - Conta Poupança\n" +
                 "Conta:");
         int tipoContaDestino = scanner.nextInt();
@@ -268,11 +284,13 @@ public class Menu {
             contaOrigem.transferir(valor, contaDestino);
 
             System.out.println("Status Conta Origem");
-            System.out.print("Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia());
-            System.out.printf("\nSaldo: %.2fzn", contaOrigem.getSaldo());
+            System.out.print("Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia()+
+                    "\nCliente: "+ contaOrigem.getNome());
+            System.out.printf("\nSaldo: %.2f\n", contaOrigem.getSaldo());
 
             System.out.println("Status Conta Destino");
-            System.out.print("Conta Numero: "+ contaDestino.getNumeroConta()+" Agencia: " + contaDestino.getAgencia());
+            System.out.print("Conta Numero: "+ contaDestino.getNumeroConta()+" Agencia: " + contaDestino.getAgencia()+
+                    "\nCliente: "+ contaDestino.getNome());
             System.out.printf("\nSaldo: %.2f\n", contaDestino.getSaldo());
 
         } catch (Exception e) {

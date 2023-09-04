@@ -15,6 +15,7 @@ public abstract class AbstractConta {
     private String senha;
     private AbstractCliente cliente;
     private double saldo;
+    private String nome;
 
     protected AbstractConta(String agencia, AbstractCliente cliente, String senha) {
         this.agencia = agencia;
@@ -22,8 +23,12 @@ public abstract class AbstractConta {
         this.senha = senha;
         this.cliente = cliente;
         this.saldo = 0.0;
+        this.nome = cliente.getNome();
     }
 
+    public String getNome() {
+        return nome;
+    }
     public String getAgencia() {
         return agencia;
     }
