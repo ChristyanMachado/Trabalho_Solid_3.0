@@ -29,7 +29,7 @@ public class Menu {
             System.out.println("|| 5 - Efetuar Saque                   ||");
             System.out.println("|| 6 - Efetuar Transferência           ||");
             System.out.println("|| 7 -            SAIR                 ||");
-            System.out.println("=-=-=-=-=-=-=-=-=-MENU-=-=-=-=-=-=-=-=-=-\n");
+            System.out.println("=-=-=-=-=-=-=-=-=-MENU-=-=-=-=-=-=-=-=-=-");
             System.out.print(" Opção:");
 
             int opcao = scanner.nextInt();
@@ -283,12 +283,12 @@ public class Menu {
             }
             contaOrigem.transferir(valor, contaDestino);
 
-            System.out.println("Status Conta Origem");
+            System.out.println("\nStatus Conta Origem");
             System.out.print("Conta Numero: "+ contaOrigem.getNumeroConta()+" Agencia: " + contaOrigem.getAgencia()+
                     "\nCliente: "+ contaOrigem.getNome());
             System.out.printf("\nSaldo: %.2f\n", contaOrigem.getSaldo());
 
-            System.out.println("Status Conta Destino");
+            System.out.println("\nStatus Conta Destino");
             System.out.print("Conta Numero: "+ contaDestino.getNumeroConta()+" Agencia: " + contaDestino.getAgencia()+
                     "\nCliente: "+ contaDestino.getNome());
             System.out.printf("\nSaldo: %.2f\n", contaDestino.getSaldo());
